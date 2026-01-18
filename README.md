@@ -10,6 +10,3 @@ Instant Feedback: Watch a real robot execute your code moments after scanning it
 Arduino-Based Scanner: An easy-to-use pen for reading the NFC cards and transmitting the program.
 Guided Challenges: A set of structured activities to guide learning from basic to more advanced concepts.
 Web Interface: An alternative web-based portal for controlling the robot and exploring its capabilities.
-
-# License
-This project is licensed under the MIT License. See the LICENSE file for details.
