@@ -122,7 +122,7 @@
         /* title welcome to robocards*/
         .hero h1{
             font-family: 'Instrument Sans', sans-serif;
-            font-size: 4rem;
+            font-size: 4.3rem;
             margin-bottom: 1rem;
             color: #000;
             margin-top: 2rem;
@@ -131,7 +131,7 @@
         }
         /*subheading under title*/
         .hero p{
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 2rem;
             color: #000;
             font-weight: 500;
@@ -144,9 +144,9 @@
             background-color: #292828;
             color: White;
             padding: 1rem 2.5rem;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 7px;
             cursor: pointer;
             transition: background-color 0.3s;
             font-family: 'Instrument Sans', sans-serif;
@@ -158,6 +158,135 @@
             background-color: #3d3d3d;
         }
 
+        /*Skills/ why is is benefitial for kids section*/
+        .education-section{
+            background-color: #2d2d2d;
+            color: white;
+            padding: 3rem 2rem;
+            margin: 1.5rem 3rem;
+            max-width:1400px;
+            border-radius: 20px;
+        }
+
+        .education-content{
+            display: grid;
+            grid-template-columns: 4fr 4fr; /*2 equal columns*/
+            gap: 1rem;
+            align-items: center;
+            padding-left: 1rem;
+        }
+
+        /*container for 4 images*/
+        .image-grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .image-grid img{
+            width: 100%;
+            height: 200px;
+            object-fit:cover; /*crop to fit*/
+            border-radius: 8px;
+        }
+        /*did you know? text*/
+        .education-text h2{
+            font-size: 1.8rem;
+            font-family: 'Instrument Sans', sans-serif;
+            display: block;
+            margin-bottom: 1.5rem;
+            margin-left: 3rem;
+        }
+        /*bullet points*/
+        .education-text p{
+            font-size: 1.4rem;
+            font-family: 'Instrument Sans', sans-serif;
+            margin-bottom: 1.8rem;
+            margin-left: 3rem;
+        }
+        .education-button{
+            background-color: #e8e8e8;
+            color: #333;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-family: 'Instrument Sans', sans-serif;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            margin-left: 14rem;
+        }
+
+        .education-button:hover{
+            background-color: #d0d0d0;
+        }
+
+        /*OUR PRODUCTS*/
+        .product-section{
+            background-color: #5dceec;
+            color: #1f1f1f;
+            padding: 3rem 2rem;
+            margin: 1.5rem 3rem;
+            max-width:1400px;
+            border-radius: 20px;
+        }
+        
+        .product-section h2{
+            text-align: center;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .products-grid{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card{
+            background-color:#ff6b6b;
+            border-radius: 20px;
+            padding:2rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover{
+            transform: translateY(-5px)/*effect of lifting up the card*/
+        }
+
+        .product-image{
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .product-image img{
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-card h3{
+            color: white;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-family: 'Jaro', sans-serif;
+        }
+        .product-card p{
+            color:white;
+            font-size: 20px;
+            line-height:1.8;
+            font-family: 'Instrument Sans', sans-serif;;
+        }
 
     </style>
 </head>
@@ -188,6 +317,57 @@
             <p>Show your logic. Beat the challenge.</p>
             <button class="challenge-button">Start a Challenge</button>
 
+        </div>
+    </section>
+
+    <!--EDUCATION SECTION-->
+    <section class="education-section">
+        <div class=" education-content">
+            <div class="image-grid">
+                <!--images, left side of the grid-->
+                <img src="assets/image1.jpg" alt="robot with girl behind">
+                <img src="assets/image2.jpg" alt="two girls building robot">
+                <img src="assets/image3.jpg" alt="two kids playing with robot">
+                <img src="assets/image4.jpg" alt="babies playing with toys">
+            </div>
+            <!--text, left right side of the grid-->
+            <div class="education-text">
+                <h2>Did you know? Kids learn best when they can see and touch what they're building. </h2>
+                <p> ➀ Engaging young minds while teaching the skills of tomorrow. </p>
+                <p>➁ Building curiosity, logic, and confidence in the next generation.</p>
+                <button class="education-button">Drive the Robot</button>
+            </div>
+        </div>
+    </section>
+
+    <!--PRODUCT SECTION-->
+    <section class="product-section">
+        <h2>Our Products</h2>
+        <div class="products-grid">
+            <!--Product1-->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="assets/kit.jpg" alt="kit">
+                </div>
+                <h3>Smart Code</h3>
+                <p>Learn coding concepts by arranging smart cards and scanning them with a smart pen.</p>
+            </div>
+            <!--product2-->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="assets/workInProgress.png" alt="comingSoon">
+                </div>
+                <h3>Coming Soon...</h3>
+                <p>Exciting new products in development!</p>
+            </div>
+            <!--product3-->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="assets/workInProgress.png" alt="comingSoon">
+                </div>
+                <h3>Coming Soon...</h3>
+                <p>Exciting new products in development!</p>
+            </div>
         </div>
     </section>
 
