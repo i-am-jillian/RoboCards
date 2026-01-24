@@ -90,7 +90,7 @@
 
         /*HERO Section(banner)*/
         .hero{
-            background-image: url('assets/landingPage.jpg');
+            background-image: url('/assets/landingPage.jpg');
             background-size: cover; /* cover entire section with the image*/
             background-position: center;
             background-repeat: no-repeat;
@@ -287,24 +287,41 @@
             line-height:1.8;
             font-family: 'Instrument Sans', sans-serif;;
         }
+        /* mobile friendly */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .education-content {
+                grid-template-columns: 1fr; /* stack into 1 column */
+            }
+            .nav-menu {
+                gap: 1rem;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
 
     </style>
 </head>
+
 </body>
 
     <!--NAV BAR-->
     <nav class="navbar">
         <div class="logo">
-            <img src = "assets/logo.png" alt="ROBOCARD Logo">
+            <img src = "/assets/logo.png" alt="ROBOCARD Logo">
             <span class="logo-text">ROBOCARD</span></span>
         </div>
 
-        <ul class = "nav-menu">
-            <li><a href="#home">Homepage</a></li>
-            <li><a href = "#challenges">Challenges</a></li>
+        <ul class="nav-menu">
+            <li><a href="/src/index.html">Homepage</a></li>
+            <li><a href="/src/challenges.html">Challenges</a></li>
             <li>
-                <a href="#games">
-                    <img src="assets/game-controller.png" alt="Games" class="game-controller-img">
+                <a href="/src/games.html">
+                    <img src="/assets/game-controller.png" alt="Games" class="game-controller-img">
                 </a>
             </li>
         </ul>
@@ -315,7 +332,7 @@
         <div class="hero-content" style="padding-right: 20rem;">
             <h1>Welcome to ROBOCARD!</h1>
             <p>Show your logic. Beat the challenge.</p>
-            <button class="challenge-button">Start a Challenge</button>
+            <button class="challenge-button" id="startChallengeBtn">Start a Challenge</button>
 
         </div>
     </section>
@@ -325,10 +342,10 @@
         <div class=" education-content">
             <div class="image-grid">
                 <!--images, left side of the grid-->
-                <img src="assets/image1.jpg" alt="robot with girl behind">
-                <img src="assets/image2.jpg" alt="two girls building robot">
-                <img src="assets/image3.jpg" alt="two kids playing with robot">
-                <img src="assets/image4.jpg" alt="babies playing with toys">
+                <img src="/assets/image1.jpg" alt="robot with girl behind">
+                <img src="/assets/image2.jpg" alt="two girls building robot">
+                <img src="/assets/image3.jpg" alt="two kids playing with robot">
+                <img src="/assets/image4.jpg" alt="babies playing with toys">
             </div>
             <!--text, left right side of the grid-->
             <div class="education-text">
@@ -347,7 +364,7 @@
             <!--Product1-->
             <div class="product-card">
                 <div class="product-image">
-                    <img src="assets/kit.jpg" alt="kit">
+                    <img src="/assets/kit.jpg" alt="kit">
                 </div>
                 <h3>Smart Code</h3>
                 <p>Learn coding concepts by arranging smart cards and scanning them with a smart pen.</p>
@@ -355,7 +372,7 @@
             <!--product2-->
             <div class="product-card">
                 <div class="product-image">
-                    <img src="assets/workInProgress.png" alt="comingSoon">
+                    <img src="/assets/workInProgress.png" alt="comingSoon">
                 </div>
                 <h3>Coming Soon...</h3>
                 <p>Exciting new products in development!</p>
@@ -363,7 +380,7 @@
             <!--product3-->
             <div class="product-card">
                 <div class="product-image">
-                    <img src="assets/workInProgress.png" alt="comingSoon">
+                    <img src="/assets/workInProgress.png" alt="comingSoon">
                 </div>
                 <h3>Coming Soon...</h3>
                 <p>Exciting new products in development!</p>
@@ -371,4 +388,12 @@
         </div>
     </section>
 
+    <script>
+    // Route the button to challenges page
+        document.getElementById("startChallengeBtn").addEventListener("click", () => {
+            window.location.href = "/src/challenges.html";
+        });
+    </script>
+
+</body>
 </html>

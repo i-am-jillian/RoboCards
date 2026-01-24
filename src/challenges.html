@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROBOCARD – Challenges</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jaro&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body{
+      font-family: 'Instrument Sans', sans-serif;
+      background: #2aa4c1; 
+      overflow: hidden;    
+    }
+
+    /* ===== NAVBAR===== */
+    .navbar{
+      background-color: #1f1f1f;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 90px; 
+    }
+    .logo{
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo img{ height: 70px; width: auto; display: block; }
+    .logo-text{
+      color: #E9E9E9;
+      font-family: 'Jaro', sans-serif;
+      font-size: 46px;
+      text-decoration: none;
+    }
+    .nav-menu{
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-menu a{
+      color: #E9E9E9;
+      font-size: 18px;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+    .nav-menu a:hover{ opacity: 0.75; }
+    .game-controller-img{
+      height: 40px;
+      width: 40px;
+      object-fit: contain;
+      display: block;
+      transition: opacity 0.2s ease;
+    }
+    .game-controller-img:hover{ opacity: 0.75; }
+
+    /* ===== FULLSCREEN MAP ===== */
+    .stage{
+      width: 100vw;
+      height: calc(100vh - 90px);
+      position: relative;
+    }
+
+    .map{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-image: url("/assets/roadmap3.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size:cover; 
+      overflow: hidden;
+    }
+
+    .map::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 520px at 30% 25%, rgba(255,255,255,0.14), rgba(255,255,255,0) 60%),
+        radial-gradient(900px 520px at 70% 60%, rgba(0,0,0,0.10), rgba(0,0,0,0) 60%);
+      pointer-events:none;
+    }
+
+    /* ===== LEFT CHALLENGE PANEL===== */
+    .challenge-panel{
+      position: fixed;
+      top: 105px; 
+      left: 24px;
+      width: min(660px, calc(100% - 48px));
+      padding: 22px 22px;
+      border-radius: 22px;
+
+      background: rgba(255, 93, 93, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+
+      border: 1px solid rgba(255,255,255,0.22);
+
+      box-shadow:
+        0 24px 60px rgba(0,0,0,0.35),
+        0 10px 18px rgba(0,0,0,0.18);
+
+      display: none;
+      z-index: 30;
+    }
+
+    .challenge-panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:22px;
+      background: radial-gradient(circle at 18% 20%, rgba(255,255,255,0.22), rgba(255,255,255,0) 55%);
+      pointer-events:none;
+    }
+
+    .panel-inner{ position: relative; }
+
+    .challenge-panel h2{
+      color: #fff;
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      letter-spacing: 0.2px;
+    }
+
+    .challenge-panel p{
+      color: rgba(255,255,255,0.95);
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel-buttons{
+      display: flex;
+      gap: 14px;
+    }
+
+    .panel-buttons button{
+      flex: 1;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 12px 20px rgba(0,0,0,0.18);
+      transition: transform 0.08s ease, opacity 0.2s ease;
+    }
+    .panel-buttons button:active{ transform: translateY(1px); }
+    .panel-buttons button[disabled]{
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .start-btn{
+      background: #f1f1f1;
+      color: #222;
+    }
+    .complete-btn{
+      background: #222;
+      color: #fff;
+    }
+
+    /* ===== GEARS LAYER ===== */
+    .nodes{
+      position: absolute;
+      inset: 0;
+      z-index: 10; 
+    }
+
+    .node{
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: clamp(90px, 8vw, 120px);
+      height: clamp(90px, 8vw, 120px);
+      cursor: pointer;
+      user-select: none;
+      filter: drop-shadow(0 14px 20px rgba(0,0,0,0.28));
+      transition: transform 0.16s ease, opacity 0.2s ease;
+    }
+
+    .node img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .node:hover{ transform: translate(-50%, -50%) scale(1.05); }
+    .node.locked{ opacity: 0.5; cursor: not-allowed; }
+    .node.locked:hover{ transform: translate(-50%, -50%); }
+
+    /* centered robot logo on the bottom of the page */
+    .bottom-logo{
+      position: absolute;
+      left: 50%;
+      bottom: 1px;
+      transform: translateX(-50%);
+      height: 120px;         
+      width: auto;
+      opacity: 0.95;
+
+      z-index: 6;               
+      pointer-events: none;        
+
+      filter: drop-shadow(0 12px 18px rgba(0,0,0,0.25));
+    }
+    .bottom-logo{
+      opacity: 0.85;
+    }
+
+
+
+    /* ===== Mobile ===== */
+    @media (max-width: 768px){
+      .navbar{ height: 80px; padding: 0.8rem 1rem; }
+      .stage{ height: calc(100vh - 80px); }
+      .logo img{ height: 56px; }
+      .logo-text{ font-size: 40px; }
+      .nav-menu{ gap: 1rem; }
+      .nav-menu a{ font-size: 16px; }
+      .challenge-panel{ top: 92px; left: 12px; width: calc(100% - 24px); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="/assets/logo.png" alt="ROBOCARD Logo">
+      <span class="logo-text">ROBOCARD</span>
+    </div>
+
+    <ul class="nav-menu">
+      <li><a href="/src/index.html">Homepage</a></li>
+      <li><a href="/src/challenges.html">Challenges</a></li>
+      <li>
+        <a href="/src/games.html">
+          <img src="/assets/game-controller.png" alt="Games" class="game-controller-img">
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- LEFT PANEL -->
+  <div class="challenge-panel" id="panel">
+    <div class="panel-inner">
+      <h2 id="panelTitle">CHALLENGE 1: Title</h2>
+      <p id="panelDesc">Description</p>
+      <div class="panel-buttons">
+        <button class="start-btn" id="startBtn">Start Challenge</button>
+        <button class="complete-btn" id="completeBtn">Completed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN MAP -->
+  <main class="stage">
+    <div class="map" id="map">
+      <div class="nodes" id="nodes"></div>
+      <img src="/assets/logo.png" alt="ROBOCARD"
+        class="bottom-logo">
+
+    </div>
+  </main>
+
+  <script>
+  const CHALLENGES = [
+    { id: 1, title: "Full turn 360°", desc: "Rotate the robot fully.", x: 50, y: 67 },
+    { id: 2, title: "Two Spins", desc: "Drive forward once.", x: 77.5, y: 72 },
+    { id: 3, title: "Square Turn Pattern", desc: "Turn right 90°.", x: 80, y: 37 },
+    { id: 4, title: "Spin the other Way", desc: "Repeat forward 3 times.", x: 68, y: 33 },
+    { id: 5, title: "Back and forth Turn", desc: "Turn left 90°.", x: 61, y: 48 },
+    { id: 6, title: "Spiral turn (Increasing rotation)", desc: "Complete a square path.", x: 51, y: 27 },
+    { id: 7, title: "Triangle Turn", desc: "Navigate around an obstacle.", x: 45, y: 49 },
+    { id: 8, title: "Predict the Final Direction", desc: "Return to the start position.", x: 33, y: 59 },
+    { id: 9, title: "Repeat a pattern", desc: "Return to the start position.", x: 29, y: 35 },
+    { id: 10, title: "Free Program", desc: "Return to the start position.", x: 15, y: 50 }
+  ];
+
+  const STORE_KEY = "robocard_challenge_progress_v3";
+
+  //Restart challenges on refresh/load:
+  localStorage.removeItem(STORE_KEY);
+
+  // progress = { unlockedMaxId: number, completedIds: number[] }
+  function loadProgress() {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return { unlockedMaxId: 1, completedIds: [] };
+    try {
+      const p = JSON.parse(raw);
+      return {
+        unlockedMaxId: Math.max(1, Number(p.unlockedMaxId || 1)),
+        completedIds: Array.isArray(p.completedIds) ? p.completedIds : []
+      };
+    } catch {
+      return { unlockedMaxId: 1, completedIds: [] };
+    }
+  }
+
+  function saveProgress(progress) {
+    localStorage.setItem(STORE_KEY, JSON.stringify(progress));
+  }
+
+  let progress = loadProgress();
+  let selectedId = null;
+
+  const mapEl = document.getElementById("map");
+  const nodesEl = document.getElementById("nodes");
+  const panelEl = document.getElementById("panel");
+  const panelTitleEl = document.getElementById("panelTitle");
+  const panelDescEl = document.getElementById("panelDesc");
+  const startBtn = document.getElementById("startBtn");
+  const completeBtn = document.getElementById("completeBtn");
+
+  function isUnlocked(id) {
+    return id <= progress.unlockedMaxId;
+  }
+
+  function isCompleted(id) {
+    return progress.completedIds.includes(id);
+  }
+
+  const BG_URL = "/assets/roadmap3.png"; 
+  let bgReady = false;
+  let bgNaturalW = 0;
+  let bgNaturalH = 0;
+
+  // returns {bgW, bgH, offsetX, offsetY} for background-size: cover; background-position: center;
+  function getCoverMetrics() {
+    const rect = mapEl.getBoundingClientRect();
+    const cw = rect.width;
+    const ch = rect.height;
+
+    // Scale to "cover"
+    const scale = Math.max(cw / bgNaturalW, ch / bgNaturalH);
+    const bgW = bgNaturalW * scale;
+    const bgH = bgNaturalH * scale;
+
+    // Centered positioning
+    const offsetX = (cw - bgW) / 2;
+    const offsetY = (ch - bgH) / 2;
+
+    return { bgW, bgH, offsetX, offsetY };
+  }
+
+  function imagePctToMapPx(xPct, yPct) {
+    const { bgW, bgH, offsetX, offsetY } = getCoverMetrics();
+    const x = offsetX + (xPct / 100) * bgW;
+    const y = offsetY + (yPct / 100) * bgH;
+    return { x, y };
+  }
+
+  const nodeElsById = new Map();
+
+  function positionAllNodes() {
+    if (!bgReady) return;
+    CHALLENGES.forEach(ch => {
+      const node = nodeElsById.get(ch.id);
+      if (!node) return;
+      const { x, y } = imagePctToMapPx(ch.x, ch.y);
+      node.style.left = x + "px";
+      node.style.top = y + "px";
+    });
+  }
+
+  function renderNodes() {
+    nodesEl.innerHTML = "";
+    nodeElsById.clear();
+
+    CHALLENGES.forEach(ch => {
+      const unlocked = isUnlocked(ch.id);
+      const done = isCompleted(ch.id);
+
+      const node = document.createElement("div");
+      node.className = "node" + (unlocked ? "" : " locked");
+
+      // IMPORTANT: we set pixel positions after bg is ready
+      node.style.left = "0px";
+      node.style.top = "0px";
+
+      node.innerHTML = `
+        <img src="/assets/${done ? "gearComplete.png" : "gearLocked.png"}" alt="">
+      `;
+
+      if (unlocked) {
+        node.addEventListener("click", () => selectChallenge(ch.id));
+      }
+
+      nodesEl.appendChild(node);
+      nodeElsById.set(ch.id, node);
+    });
+
+    positionAllNodes();
+  }
+
+  function selectChallenge(id) {
+    const ch = CHALLENGES.find(c => c.id === id);
+    if (!ch) return;
+
+    selectedId = id;
+    panelEl.style.display = "block";
+
+    panelTitleEl.textContent = `CHALLENGE ${ch.id}: ${ch.title}`;
+    panelDescEl.textContent = ch.desc;
+
+    completeBtn.disabled = isCompleted(id);
+  }
+
+  function markCompleted(id) {
+    if (isCompleted(id)) return;
+
+    progress.completedIds.push(id);
+
+    // unlock next challenge
+    if (id === progress.unlockedMaxId && id < CHALLENGES.length) {
+      progress.unlockedMaxId = id + 1;
+    }
+
+    saveProgress(progress);
+    renderNodes();
+    selectChallenge(id);
+  }
+
+  // Panel buttons
+  startBtn.addEventListener("click", () => {
+    if (selectedId == null) return;
+    startBtn.addEventListener("click", () => {
+    if (selectedId == null) return;
+
+    const ch = CHALLENGES.find(c => c.id === selectedId);
+    if (!ch) return;
+
+    // send id + title so the sheet can display it
+    const params = new URLSearchParams({
+      id: String(ch.id),
+      title: ch.title
+    });
+
+    window.location.href = `/src/challenge-sheet.html?${params.toString()}`;
+  });
+
+  });
+
+  completeBtn.addEventListener("click", () => {
+    if (selectedId == null) return;
+    markCompleted(selectedId);
+  });
+
+  // Reposition nodes on resize
+  let resizeRaf = null;
+  window.addEventListener("resize", () => {
+    if (resizeRaf) return;
+    resizeRaf = requestAnimationFrame(() => {
+      resizeRaf = null;
+      positionAllNodes();
+    });
+  });
+
+  // Load background image to get natural size, then render nodes correctly
+  const bgImg = new Image();
+  bgImg.onload = () => {
+    bgNaturalW = bgImg.naturalWidth;
+    bgNaturalH = bgImg.naturalHeight;
+    bgReady = true;
+
+    renderNodes();
+    selectChallenge(Math.min(progress.unlockedMaxId, CHALLENGES.length));
+  };
+  bgImg.src = BG_URL;
+
+</script>
+
+</body>
+</html>
