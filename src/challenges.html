@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ROBOCARD – Challenges</title>
 
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +19,8 @@
 
     body{
       font-family: 'Instrument Sans', sans-serif;
-      background: #2aa4c1; 
-      overflow: hidden;    
+      background: #2aa4c1;
+      overflow: hidden;
     }
 
     /* ===== NAVBAR===== */
@@ -27,7 +30,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 90px; 
+      height: 90px;
     }
     .logo{
       display: flex;
@@ -77,7 +80,7 @@
       background-image: url("/assets/roadmap3.png");
       background-repeat: no-repeat;
       background-position: center;
-      background-size:cover; 
+      background-size: cover;
       overflow: hidden;
     }
 
@@ -94,7 +97,7 @@
     /* ===== LEFT CHALLENGE PANEL===== */
     .challenge-panel{
       position: fixed;
-      top: 105px; 
+      top: 105px;
       left: 24px;
       width: min(660px, calc(100% - 48px));
       padding: 22px 22px;
@@ -176,7 +179,7 @@
     .nodes{
       position: absolute;
       inset: 0;
-      z-index: 10; 
+      z-index: 10;
     }
 
     .node{
@@ -207,20 +210,143 @@
       left: 50%;
       bottom: 1px;
       transform: translateX(-50%);
-      height: 120px;         
+      height: 120px;
       width: auto;
-      opacity: 0.95;
+      opacity: 0.85;
 
-      z-index: 6;               
-      pointer-events: none;        
+      z-index: 6;
+      pointer-events: none;
 
       filter: drop-shadow(0 12px 18px rgba(0,0,0,0.25));
     }
-    .bottom-logo{
-      opacity: 0.85;
+
+    /* ===== CHALLENGE SHEET OVERLAY ===== */
+    .confetti-canvas{
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999; /* above the sheet + overlay */
+    }
+    .sheet-overlay{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      z-index: 200;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .sheet-overlay.open{ display: flex; }
+
+    .sheet{
+      width: min(1200px, 96vw);
+      border-radius: 28px;
+      background: rgba(0,0,0,0.72);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
     }
 
+    .sheet-left{
+      border-radius: 22px;
+      background: rgba(0,0,0,0.30);
+      border: 1px solid rgba(255,255,255,0.12);
+      overflow: hidden;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
 
+    .sheet-img{
+      width: 100%;
+      max-width: 660px;
+      height: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+      background: rgba(255,255,255,0.04);
+      display: block;
+    }
+
+    .sheet-right{
+      border-radius: 22px;
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      min-height: 520px;
+    }
+
+    .sheet-title{
+      font-size: 30px;
+      font-weight: 800;
+      color: #111;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .sheet-section{ margin-bottom: 14px; }
+
+    .sheet-section-title{
+      font-size: 18px;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 6px;
+    }
+
+    .sheet-text{
+      font-size: 16px;
+      color: #222;
+      font-weight: 600;
+    }
+
+    .sheet-list{
+      margin-left: 18px;
+      color: #222;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .sheet-actions{
+      margin-top: auto;
+      display: flex;
+      gap: 14px;
+    }
+
+    .sheet-btn{
+      flex: 1;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 12px 20px rgba(0,0,0,0.16);
+      transition: transform 0.08s ease, opacity 0.2s ease;
+    }
+    .sheet-btn:active{ transform: translateY(1px); }
+
+    .sheet-back{
+      background: #f1f1f1;
+      color: #222;
+    }
+    .sheet-complete{
+      background: #222;
+      color: #fff;
+    }
 
     /* ===== Mobile ===== */
     @media (max-width: 768px){
@@ -232,10 +358,16 @@
       .nav-menu a{ font-size: 16px; }
       .challenge-panel{ top: 92px; left: 12px; width: calc(100% - 24px); }
     }
+    @media (max-width: 960px){
+      .sheet{ grid-template-columns: 1fr; }
+      .sheet-left, .sheet-right{ min-height: unset; }
+      .sheet-left{ min-height: 340px; }
+    }
   </style>
 </head>
 
 <body>
+  <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">
@@ -270,218 +402,481 @@
   <main class="stage">
     <div class="map" id="map">
       <div class="nodes" id="nodes"></div>
-      <img src="/assets/logo.png" alt="ROBOCARD"
-        class="bottom-logo">
-
+      <img src="/assets/logo.png" alt="ROBOCARD" class="bottom-logo">
     </div>
   </main>
+  
+  <!-- ===== CHALLENGE SHEET OVERLAY ===== -->
+  <div class="sheet-overlay" id="sheetOverlay" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <div class="sheet-left">
+        <img id="sheetImg" class="sheet-img" alt="Challenge visual">
+      </div>
+
+      <div class="sheet-right">
+        <h2 id="sheetTitle" class="sheet-title">Challenge</h2>
+
+        <div class="sheet-section">
+          <div class="sheet-section-title">🎯 Goal</div>
+          <div id="sheetGoal" class="sheet-text"></div>
+        </div>
+
+        <div class="sheet-section">
+          <div class="sheet-section-title">🧠 What’s happening?</div>
+          <ul id="sheetHappening" class="sheet-list"></ul>
+        </div>
+
+        <div class="sheet-section">
+          <div class="sheet-section-title">🔁 Try changing it</div>
+          <ul id="sheetTry" class="sheet-list"></ul>
+        </div>
+
+        <div class="sheet-actions">
+          <button class="sheet-btn sheet-back" id="sheetBackBtn">⬅ Back</button>
+          <button class="sheet-btn sheet-complete" id="sheetCompleteBtn">✅ Completed</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
-  const CHALLENGES = [
-    { id: 1, title: "Full turn 360°", desc: "Rotate the robot fully.", x: 50, y: 67 },
-    { id: 2, title: "Two Spins", desc: "Drive forward once.", x: 77.5, y: 72 },
-    { id: 3, title: "Square Turn Pattern", desc: "Turn right 90°.", x: 80, y: 37 },
-    { id: 4, title: "Spin the other Way", desc: "Repeat forward 3 times.", x: 68, y: 33 },
-    { id: 5, title: "Back and forth Turn", desc: "Turn left 90°.", x: 61, y: 48 },
-    { id: 6, title: "Spiral turn (Increasing rotation)", desc: "Complete a square path.", x: 51, y: 27 },
-    { id: 7, title: "Triangle Turn", desc: "Navigate around an obstacle.", x: 45, y: 49 },
-    { id: 8, title: "Predict the Final Direction", desc: "Return to the start position.", x: 33, y: 59 },
-    { id: 9, title: "Repeat a pattern", desc: "Return to the start position.", x: 29, y: 35 },
-    { id: 10, title: "Free Program", desc: "Return to the start position.", x: 15, y: 50 }
-  ];
+    const CHALLENGE_DETAILS = {
+      1: {
+        goal: "Make the robot turn all the way around. 🌀",
+        img: "/assets/challenge1.png",
+        happening: [
+          "The robot enters a loop 🔁",
+          "Inside the loop, it turns clockwise ➡️",
+          "360° makes a full circle ⭕",
+          "The loop runs 1 time, so it spins once ✅"
+        ],
+        try: ["Change 360° to 180° — what happens? 🤔"]
+      },
+      2: {
+        goal: "Make the robot spin twice. 🌀🌀",
+        img: "/assets/challenge2.png",
+        happening: [
+          "A loop repeats the same turn 🔁",
+          "Each 360° is one full spin ⭕",
+          "Repeat it 2 times to spin twice ✅✅"
+        ],
+        try: ["Try 3 repeats — how many spins now? ⭐"]
+      },
+      3: {
+        goal: "Make the robot turn like a square. ⬛",
+        img: "/assets/challenge3.png",
+        happening: [
+          "A square has 4 corners 4️⃣",
+          "Each corner is a 90° turn ↪️",
+          "Do 90° four times to make a square ✅"
+        ],
+        try: ["Try 60° instead — what shape do you get? 🔷"]
+      },
+      4: {
+        goal: "Make the robot turn counterclockwise. ⬅️",
+        img: "/assets/challenge4.png",
+        happening: [
+          "Clockwise turns one way ➡️",
+          "Counterclockwise turns the other way ⬅️",
+          "You can use a negative angle like -90° ➖"
+        ],
+        try: ["Try -180° — where does it face? 🧭"]
+      },
+      5: {
+        goal: "Make the robot turn right, then left. ➡️⬅️",
+        img: "/assets/challenge5.png",
+        happening: [
+          "First turn changes direction ➡️",
+          "Second turn changes it again ⬅️",
+          "Both turns together decide the final facing 🧠"
+        ],
+        try: ["Try right 90°, then left 180° 🤔"]
+      },
+      6: {
+        goal: "Make the robot turn like a triangle. 🔺",
+        img: "/assets/challenge6.png",
+        happening: [
+          "A triangle has 3 corners 3️⃣",
+          "A common turn is 120° at each corner 🔁",
+          "Repeat it 3 times ✅"
+        ],
+        try: ["Try 60° turns — what does it look like? 👀"]
+      },
+      7: {
+        goal: "Make the robot turn more each time. 📈",
+        img: "/assets/challenge7.png",
+        happening: [
+          "Each loop step increases the turn ➕",
+          "The robot rotates a little more every time 🔁",
+          "This makes a cool growing pattern ✨"
+        ],
+        try: ["Increase by 15° instead of 30° 🧪"]
+      },
+      8: {
+        goal: "Guess where the robot will face. 🧭",
+        img: "/assets/challenge8.png",
+        happening: [
+          "Each turn changes the robot’s heading 🔄",
+          "Add turns to predict the final direction ➕",
+          "A full 360° brings you back to the start direction ⭕"
+        ],
+        try: ["Guess first, then run and check ✅"]
+      },
+      9: {
+        goal: "Turn left, then right, three times. ⬅️➡️⬅️➡️",
+        img: "/assets/challenge9.png",
+        happening: [
+          "A loop repeats a pattern 🔁",
+          "Inside the loop: left, then right ⬅️➡️",
+          "Repeat the pattern 3 times 3️⃣"
+        ],
+        try: ["Swap the order — is it different? 🤔"]
+      },
+      10: {
+        goal: "Make the robot do something interesting! 🎨🤖",
+        img: "/assets/challenge10.png",
+        happening: [
+          "Mix loops and different turns 🔁",
+          "Small changes make new patterns ✨",
+          "There’s no single correct answer ⭐"
+        ],
+        try: ["Try 30°, 60°, 90° inside a loop 🧪"]
+      }
+    };
 
-  const STORE_KEY = "robocard_challenge_progress_v3";
+    const CHALLENGES = [
+      { id: 1, title: "Full turn 360°", desc: "Rotate the robot fully.", x: 50, y: 67 },
+      { id: 2, title: "Two Spins", desc: "Make the robot spin twice. 🌀🌀", x: 77.5, y: 72 },
+      { id: 3, title: "Square Turn Pattern", desc: "Make the robot turn like a square. ⬛", x: 80, y: 37 },
+      { id: 4, title: "Spin the other Way", desc: "Make the robot turn counterclockwise. ⬅️", x: 68, y: 33 },
+      { id: 5, title: "Back and forth Turn", desc: "Turn right, then left. ➡️⬅️", x: 61, y: 48 },
+      { id: 6, title: "Triangle Turn", desc: "Make the robot turn like a triangle. 🔺", x: 51, y: 27 },
+      { id: 7, title: "Turn More Each Time", desc: "Turn more each time! 📈", x: 45, y: 49 },
+      { id: 8, title: "Predict the Final Direction", desc: "Guess where it will face! 🧭", x: 33, y: 59 },
+      { id: 9, title: "Repeat a pattern", desc: "Left then right three times! 🔁", x: 29, y: 35 },
+      { id: 10, title: "Free Program", desc: "Do something interesting! 🎨🤖", x: 15, y: 50 }
+    ];
 
-  //Restart challenges on refresh/load:
-  localStorage.removeItem(STORE_KEY);
+    const STORE_KEY = "robocard_challenge_progress_v3";
+    localStorage.removeItem(STORE_KEY);
 
-  // progress = { unlockedMaxId: number, completedIds: number[] }
-  function loadProgress() {
-    const raw = localStorage.getItem(STORE_KEY);
-    if (!raw) return { unlockedMaxId: 1, completedIds: [] };
-    try {
-      const p = JSON.parse(raw);
-      return {
-        unlockedMaxId: Math.max(1, Number(p.unlockedMaxId || 1)),
-        completedIds: Array.isArray(p.completedIds) ? p.completedIds : []
-      };
-    } catch {
-      return { unlockedMaxId: 1, completedIds: [] };
+    // If you want progress to persist, REMOVE this line:
+    // localStorage.removeItem(STORE_KEY);
+
+    // ---- CONFETTI (create once, reuse) ----
+    const confettiCanvas = document.getElementById("confettiCanvas");
+    const myConfetti = (confettiCanvas && typeof confetti === "function")
+      ? confetti.create(confettiCanvas, { resize: true, useWorker: false })
+      : null;
+
+    function fireConfetti() {
+      if (!myConfetti) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      confettiCanvas.width = Math.floor(window.innerWidth * dpr);
+      confettiCanvas.height = Math.floor(window.innerHeight * dpr);
+
+      const end = Date.now() + 900;
+
+      (function frame() {
+        myConfetti({
+          particleCount: 10,
+          spread: 80,
+          startVelocity: 35,
+          origin: { x: Math.random(), y: 0.25 }
+        });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      })();
     }
-  }
 
-  function saveProgress(progress) {
-    localStorage.setItem(STORE_KEY, JSON.stringify(progress));
-  }
+    function loadProgress() {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return { unlockedMaxId: 1, completedIds: [] };
+      try {
+        const p = JSON.parse(raw);
+        return {
+          unlockedMaxId: Math.max(1, Number(p.unlockedMaxId || 1)),
+          completedIds: Array.isArray(p.completedIds) ? p.completedIds : []
+        };
+      } catch {
+        return { unlockedMaxId: 1, completedIds: [] };
+      }
+    }
 
-  let progress = loadProgress();
-  let selectedId = null;
+    function saveProgress(progress) {
+      localStorage.setItem(STORE_KEY, JSON.stringify(progress));
+    }
 
-  const mapEl = document.getElementById("map");
-  const nodesEl = document.getElementById("nodes");
-  const panelEl = document.getElementById("panel");
-  const panelTitleEl = document.getElementById("panelTitle");
-  const panelDescEl = document.getElementById("panelDesc");
-  const startBtn = document.getElementById("startBtn");
-  const completeBtn = document.getElementById("completeBtn");
+    let progress = loadProgress();
+    let selectedId = null;
 
-  function isUnlocked(id) {
-    return id <= progress.unlockedMaxId;
-  }
+    const mapEl = document.getElementById("map");
+    const nodesEl = document.getElementById("nodes");
+    const panelEl = document.getElementById("panel");
+    const panelTitleEl = document.getElementById("panelTitle");
+    const panelDescEl = document.getElementById("panelDesc");
+    const startBtn = document.getElementById("startBtn");
+    const completeBtn = document.getElementById("completeBtn");
 
-  function isCompleted(id) {
-    return progress.completedIds.includes(id);
-  }
+    // Sheet elements
+    const sheetOverlay = document.getElementById("sheetOverlay");
+    const sheetImg = document.getElementById("sheetImg");
+    const sheetTitle = document.getElementById("sheetTitle");
+    const sheetGoal = document.getElementById("sheetGoal");
+    const sheetHappening = document.getElementById("sheetHappening");
+    const sheetTry = document.getElementById("sheetTry");
+    const sheetBackBtn = document.getElementById("sheetBackBtn");
+    const sheetCompleteBtn = document.getElementById("sheetCompleteBtn");
 
-  const BG_URL = "/assets/roadmap3.png"; 
-  let bgReady = false;
-  let bgNaturalW = 0;
-  let bgNaturalH = 0;
+    function isUnlocked(id) {
+      return id <= progress.unlockedMaxId;
+    }
 
-  // returns {bgW, bgH, offsetX, offsetY} for background-size: cover; background-position: center;
-  function getCoverMetrics() {
-    const rect = mapEl.getBoundingClientRect();
-    const cw = rect.width;
-    const ch = rect.height;
+    function isCompleted(id) {
+      return progress.completedIds.includes(id);
+    }
 
-    // Scale to "cover"
-    const scale = Math.max(cw / bgNaturalW, ch / bgNaturalH);
-    const bgW = bgNaturalW * scale;
-    const bgH = bgNaturalH * scale;
+    const BG_URL = "/assets/roadmap3.png";
+    let bgReady = false;
+    let bgNaturalW = 0;
+    let bgNaturalH = 0;
 
-    // Centered positioning
-    const offsetX = (cw - bgW) / 2;
-    const offsetY = (ch - bgH) / 2;
+    function getCoverMetrics() {
+      const rect = mapEl.getBoundingClientRect();
+      const cw = rect.width;
+      const ch = rect.height;
 
-    return { bgW, bgH, offsetX, offsetY };
-  }
+      const scale = Math.max(cw / bgNaturalW, ch / bgNaturalH);
+      const bgW = bgNaturalW * scale;
+      const bgH = bgNaturalH * scale;
 
-  function imagePctToMapPx(xPct, yPct) {
-    const { bgW, bgH, offsetX, offsetY } = getCoverMetrics();
-    const x = offsetX + (xPct / 100) * bgW;
-    const y = offsetY + (yPct / 100) * bgH;
-    return { x, y };
-  }
+      const offsetX = (cw - bgW) / 2;
+      const offsetY = (ch - bgH) / 2;
 
-  const nodeElsById = new Map();
+      return { bgW, bgH, offsetX, offsetY };
+    }
 
-  function positionAllNodes() {
-    if (!bgReady) return;
-    CHALLENGES.forEach(ch => {
-      const node = nodeElsById.get(ch.id);
-      if (!node) return;
-      const { x, y } = imagePctToMapPx(ch.x, ch.y);
-      node.style.left = x + "px";
-      node.style.top = y + "px";
-    });
-  }
+    function imagePctToMapPx(xPct, yPct) {
+      const { bgW, bgH, offsetX, offsetY } = getCoverMetrics();
+      const x = offsetX + (xPct / 100) * bgW;
+      const y = offsetY + (yPct / 100) * bgH;
+      return { x, y };
+    }
 
-  function renderNodes() {
-    nodesEl.innerHTML = "";
-    nodeElsById.clear();
+    const nodeElsById = new Map();
 
-    CHALLENGES.forEach(ch => {
-      const unlocked = isUnlocked(ch.id);
-      const done = isCompleted(ch.id);
+    function positionAllNodes() {
+      if (!bgReady) return;
+      CHALLENGES.forEach(ch => {
+        const node = nodeElsById.get(ch.id);
+        if (!node) return;
+        const { x, y } = imagePctToMapPx(ch.x, ch.y);
+        node.style.left = x + "px";
+        node.style.top = y + "px";
+      });
+    }
 
-      const node = document.createElement("div");
-      node.className = "node" + (unlocked ? "" : " locked");
+    function renderNodes() {
+      nodesEl.innerHTML = "";
+      nodeElsById.clear();
 
-      // IMPORTANT: we set pixel positions after bg is ready
-      node.style.left = "0px";
-      node.style.top = "0px";
+      CHALLENGES.forEach(ch => {
+        const unlocked = isUnlocked(ch.id);
+        const done = isCompleted(ch.id);
 
-      node.innerHTML = `
-        <img src="/assets/${done ? "gearComplete.png" : "gearLocked.png"}" alt="">
-      `;
+        const node = document.createElement("div");
+        node.className = "node" + (unlocked ? "" : " locked");
 
-      if (unlocked) {
-        node.addEventListener("click", () => selectChallenge(ch.id));
+        node.style.left = "0px";
+        node.style.top = "0px";
+
+        node.innerHTML = `
+          <img src="/assets/${done ? "gearComplete.png" : "gearLocked.png"}" alt="">
+        `;
+
+        if (unlocked) {
+          node.addEventListener("click", () => selectChallenge(ch.id));
+        }
+
+        nodesEl.appendChild(node);
+        nodeElsById.set(ch.id, node);
+      });
+
+      positionAllNodes();
+    }
+
+    function selectChallenge(id) {
+      const ch = CHALLENGES.find(c => c.id === id);
+      if (!ch) return;
+
+      selectedId = id;
+      panelEl.style.display = "block";
+
+      panelTitleEl.textContent = `CHALLENGE ${ch.id}: ${ch.title}`;
+      panelDescEl.textContent = ch.desc;
+
+      completeBtn.disabled = isCompleted(id);
+    }
+
+    function markCompleted(id) {
+      if (isCompleted(id)) return;
+
+      progress.completedIds.push(id);
+
+      if (id === progress.unlockedMaxId && id < CHALLENGES.length) {
+        progress.unlockedMaxId = id + 1;
       }
 
-      nodesEl.appendChild(node);
-      nodeElsById.set(ch.id, node);
-    });
-
-    positionAllNodes();
-  }
-
-  function selectChallenge(id) {
-    const ch = CHALLENGES.find(c => c.id === id);
-    if (!ch) return;
-
-    selectedId = id;
-    panelEl.style.display = "block";
-
-    panelTitleEl.textContent = `CHALLENGE ${ch.id}: ${ch.title}`;
-    panelDescEl.textContent = ch.desc;
-
-    completeBtn.disabled = isCompleted(id);
-  }
-
-  function markCompleted(id) {
-    if (isCompleted(id)) return;
-
-    progress.completedIds.push(id);
-
-    // unlock next challenge
-    if (id === progress.unlockedMaxId && id < CHALLENGES.length) {
-      progress.unlockedMaxId = id + 1;
+      saveProgress(progress);
+      renderNodes();
+      selectChallenge(id);
     }
 
-    saveProgress(progress);
-    renderNodes();
-    selectChallenge(id);
-  }
+    function openSheet(id) {
+      const ch = CHALLENGES.find(c => c.id === id);
+      const detail = CHALLENGE_DETAILS[id];
+      if (!ch || !detail) return;
+      selectedId = id;
 
-  // Panel buttons
-  startBtn.addEventListener("click", () => {
-    if (selectedId == null) return;
+      sheetTitle.textContent = `Challenge ${id}: ${ch.title}`;
+      sheetGoal.textContent = detail.goal;
+
+      sheetImg.src = detail.img;
+
+      sheetHappening.innerHTML = "";
+      detail.happening.forEach(line => {
+        const li = document.createElement("li");
+        li.textContent = line;
+        sheetHappening.appendChild(li);
+      });
+
+      sheetTry.innerHTML = "";
+      detail.try.forEach(line => {
+        const li = document.createElement("li");
+        li.textContent = line;
+        sheetTry.appendChild(li);
+      });
+
+      sheetCompleteBtn.dataset.mode = "complete";
+      setSheetButtonToCompleteMode();
+      sheetCompleteBtn.disabled = isCompleted(id);
+
+      if (isCompleted(id)){
+        sheetCompleteBtn.dataset.mode = "next";
+        setSheetButtonToNextMode(getNextId(id));
+      }
+
+      sheetOverlay.classList.add("open");
+      sheetOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeSheet() {
+      sheetOverlay.classList.remove("open");
+      sheetOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    // Panel buttons
     startBtn.addEventListener("click", () => {
-    if (selectedId == null) return;
-
-    const ch = CHALLENGES.find(c => c.id === selectedId);
-    if (!ch) return;
-
-    // send id + title so the sheet can display it
-    const params = new URLSearchParams({
-      id: String(ch.id),
-      title: ch.title
+      if (selectedId == null) return;
+      openSheet(selectedId);
     });
 
-    window.location.href = `/src/challenge-sheet.html?${params.toString()}`;
-  });
-
-  });
-
-  completeBtn.addEventListener("click", () => {
-    if (selectedId == null) return;
-    markCompleted(selectedId);
-  });
-
-  // Reposition nodes on resize
-  let resizeRaf = null;
-  window.addEventListener("resize", () => {
-    if (resizeRaf) return;
-    resizeRaf = requestAnimationFrame(() => {
-      resizeRaf = null;
-      positionAllNodes();
+    completeBtn.addEventListener("click", () => {
+      if (selectedId == null) return;
+      if(!isCompleted(selectedId)){
+        markCompleted(selectedId);
+      }
+      fireConfetti();
     });
-  });
 
-  // Load background image to get natural size, then render nodes correctly
-  const bgImg = new Image();
-  bgImg.onload = () => {
-    bgNaturalW = bgImg.naturalWidth;
-    bgNaturalH = bgImg.naturalHeight;
-    bgReady = true;
+    // Sheet actions
+    sheetBackBtn.addEventListener("click", closeSheet);
 
-    renderNodes();
-    selectChallenge(Math.min(progress.unlockedMaxId, CHALLENGES.length));
-  };
-  bgImg.src = BG_URL;
+    sheetCompleteBtn.addEventListener("click", () => {
+      if (selectedId == null) return;
+      const mode = sheetCompleteBtn.dataset.mode || "complete";
+      // First click: complete + confetti + turn into Next
+      if (mode === "next") {
+        const nextId = getNextId(selectedId);
+        if(nextId == null) return;
 
-</script>
+        selectedId = nextId;
+        selectChallenge(nextId);
+        openSheet(nextId);
+        return;
+      }
 
+      if (mode === "complete"){
+        markCompleted(selectedId);
+        fireConfetti();
+
+        sheetCompleteBtn.dataset.mode = "next";
+        setSheetButtonToNextMode(getNextId(selectedId));
+        return;
+      }
+      if (!isCompleted(selectedId)){
+        markCompleted(selectedId);
+      }
+      fireConfetti();
+
+      sheetCompleteBtn.dataset.mode = "next";
+      setSheetButtonToNextMode(getNextId(selectedId));
+
+    });
+
+    // Click outside closes
+    sheetOverlay.addEventListener("click", (e) => {
+      if (e.target === sheetOverlay) closeSheet();
+    });
+
+    // ESC closes
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && sheetOverlay.classList.contains("open")) {
+        closeSheet();
+      }
+    });
+
+    // Reposition nodes on resize
+    let resizeRaf = null;
+    window.addEventListener("resize", () => {
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(() => {
+        resizeRaf = null;
+        positionAllNodes();
+      });
+    });
+
+    function getNextId(id) {
+      if (id < CHALLENGES.length) return id + 1;
+      return null; // no next challenge
+    }
+
+    function setSheetButtonToCompleteMode() {
+      sheetCompleteBtn.textContent = "✅ Completed";
+      sheetCompleteBtn.classList.add("sheet-complete");
+    }
+
+    function setSheetButtonToNextMode(nextId) {
+      if (nextId == null) {
+        sheetCompleteBtn.textContent = "🎉 All done!";
+        sheetCompleteBtn.disabled = true;
+        return;
+      }
+      sheetCompleteBtn.textContent = "Next challenge →";
+      sheetCompleteBtn.disabled = false;
+    }
+
+    // Load background image to get natural size, then render nodes correctly
+    const bgImg = new Image();
+    bgImg.onload = () => {
+      bgNaturalW = bgImg.naturalWidth;
+      bgNaturalH = bgImg.naturalHeight;
+      bgReady = true;
+
+      renderNodes();
+      selectChallenge(Math.min(progress.unlockedMaxId, CHALLENGES.length));
+    };
+    bgImg.src = BG_URL;
+  </script>
 </body>
 </html>
