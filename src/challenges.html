@@ -294,21 +294,21 @@
       font-size: 30px;
       font-weight: 800;
       color: #111;
-      line-height: 1.1;
+      line-height: 1.5;
       margin-bottom: 14px;
     }
 
-    .sheet-section{ margin-bottom: 14px; }
+    .sheet-section{ margin-bottom: 15px; }
 
     .sheet-section-title{
-      font-size: 18px;
+      font-size: 25px;
       font-weight: 800;
       color: #111;
       margin-bottom: 6px;
     }
 
     .sheet-text{
-      font-size: 16px;
+      font-size: 20px;
       color: #222;
       font-weight: 600;
     }
@@ -316,14 +316,14 @@
     .sheet-list{
       margin-left: 18px;
       color: #222;
-      font-size: 16px;
-      line-height: 1.5;
+      font-size: 18px;
+      line-height: 2;
     }
 
     .sheet-actions{
       margin-top: auto;
       display: flex;
-      gap: 14px;
+      gap: 16px;
     }
 
     .sheet-btn{
@@ -445,10 +445,7 @@
         goal: "Make the robot turn all the way around. 🌀",
         img: "/assets/challenge1.png",
         happening: [
-          "The robot enters a loop 🔁",
-          "Inside the loop, it turns clockwise ➡️",
-          "360° makes a full circle ⭕",
-          "The loop runs 1 time, so it spins once ✅"
+          "A 360° turn is one full circle.",
         ],
         try: ["Change 360° to 180° — what happens? 🤔"]
       },
@@ -458,9 +455,9 @@
         happening: [
           "A loop repeats the same turn 🔁",
           "Each 360° is one full spin ⭕",
-          "Repeat it 2 times to spin twice ✅✅"
+          "Repeat it 2 times to spin twice "
         ],
-        try: ["Try 3 repeats — how many spins now? ⭐"]
+        try: ["Try 3 repeats — how many spins now?"]
       },
       3: {
         goal: "Make the robot turn like a square. ⬛",
@@ -468,9 +465,9 @@
         happening: [
           "A square has 4 corners 4️⃣",
           "Each corner is a 90° turn ↪️",
-          "Do 90° four times to make a square ✅"
+          "Do 90° four times to make a square"
         ],
-        try: ["Try 60° instead — what shape do you get? 🔷"]
+        try: ["Try 60° instead — what shape do you get?"]
       },
       4: {
         goal: "Make the robot turn counterclockwise. ⬅️",
@@ -478,27 +475,27 @@
         happening: [
           "Clockwise turns one way ➡️",
           "Counterclockwise turns the other way ⬅️",
-          "You can use a negative angle like -90° ➖"
         ],
         try: ["Try -180° — where does it face? 🧭"]
       },
       5: {
-        goal: "Make the robot turn right, then left. ➡️⬅️",
+        goal: "Undo the turn. ➡️⬅️",
         img: "/assets/challenge5.png",
         happening: [
           "First turn changes direction ➡️",
-          "Second turn changes it again ⬅️",
-          "Both turns together decide the final facing 🧠"
+          "Second turn cancels the first ⬅️",
+          "The robot ends facing the way it started"
         ],
         try: ["Try right 90°, then left 180° 🤔"]
       },
       6: {
-        goal: "Make the robot turn like a triangle. 🔺",
+        goal: "Make an L",
         img: "/assets/challenge6.png",
         happening: [
-          "A triangle has 3 corners 3️⃣",
-          "A common turn is 120° at each corner 🔁",
-          "Repeat it 3 times ✅"
+          "First, the robot moves forward ⬆️",
+          "Then it turns 90° to the right ↪️",
+          "After turning, it moves forward again ⬆️",
+          "Forward + turn + forward makes an L shape 📐"
         ],
         try: ["Try 60° turns — what does it look like? 👀"]
       },
@@ -550,7 +547,7 @@
       { id: 3, title: "Square Turn Pattern", desc: "Make the robot turn like a square. ⬛", x: 80, y: 37 },
       { id: 4, title: "Spin the other Way", desc: "Make the robot turn counterclockwise. ⬅️", x: 68, y: 33 },
       { id: 5, title: "Back and forth Turn", desc: "Turn right, then left. ➡️⬅️", x: 61, y: 48 },
-      { id: 6, title: "Triangle Turn", desc: "Make the robot turn like a triangle. 🔺", x: 51, y: 27 },
+      { id: 6, title: "Make an L", desc: "Make the robot make an L", x: 51, y: 27 },
       { id: 7, title: "Turn More Each Time", desc: "Turn more each time! 📈", x: 45, y: 49 },
       { id: 8, title: "Predict the Final Direction", desc: "Guess where it will face! 🧭", x: 33, y: 59 },
       { id: 9, title: "Repeat a pattern", desc: "Left then right three times! 🔁", x: 29, y: 35 },
