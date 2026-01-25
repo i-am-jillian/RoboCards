@@ -569,8 +569,11 @@
       ? confetti.create(confettiCanvas, { resize: true, useWorker: false })
       : null;
 
+    let isConfettiRunning = false;
+
     function fireConfetti() {
-      if (!myConfetti) return;
+      if (!myConfetti || isConfettiRunning) return;
+      isConfettiRunning=true;
 
       const dpr = window.devicePixelRatio || 1;
       confettiCanvas.width = Math.floor(window.innerWidth * dpr);
@@ -585,7 +588,13 @@
           startVelocity: 35,
           origin: { x: Math.random(), y: 0.25 }
         });
-        if (Date.now() < end) requestAnimationFrame(frame);
+        if (Date.now() < end){
+          requestAnimationFrame(frame);
+        } else{
+          myConfetti.reset();
+          isConfettiRunning = false;
+        }
+
       })();
     }
 
@@ -785,8 +794,8 @@
       if (selectedId == null) return;
       if(!isCompleted(selectedId)){
         markCompleted(selectedId);
+        fireConfetti();
       }
-      fireConfetti();
     });
 
     // Sheet actions
@@ -807,21 +816,14 @@
       }
 
       if (mode === "complete"){
-        markCompleted(selectedId);
-        fireConfetti();
+        if (!isCompleted(selectedId)){
+          markCompleted(selectedId);
+          fireConfetti();
+        }
 
         sheetCompleteBtn.dataset.mode = "next";
         setSheetButtonToNextMode(getNextId(selectedId));
-        return;
       }
-      if (!isCompleted(selectedId)){
-        markCompleted(selectedId);
-      }
-      fireConfetti();
-
-      sheetCompleteBtn.dataset.mode = "next";
-      setSheetButtonToNextMode(getNextId(selectedId));
-
     });
 
     // Click outside closes
