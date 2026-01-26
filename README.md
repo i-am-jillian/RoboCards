@@ -3,7 +3,11 @@ A modular robotics kit for kids that teaches coding through physical NFC code ca
 
 ## 🎥 Demo Video
 
-[![RoboCard Demo](https://img.youtube.com/vi/jfwUmBS-S_8/0.jpg)](https://www.youtube.com/watch?v=jfwUmBS-S_8)
+
+**▶ Watch here:** https://www.youtube.com/watch?v=jfwUmBS-S_8
+
+
+[![▶ RoboCard Demo – Click to Watch](https://img.youtube.com/vi/jfwUmBS-S_8/0.jpg)](https://www.youtube.com/watch?v=jfwUmBS-S_8)
 
 # How It Works
 Children arrange physical NFC cards, each representing a specific command or logic block, to create a program. They then scan this sequence of cards with an Arduino-based "pen." The pen reads the commands and sends them to a robot, which immediately executes the program.
