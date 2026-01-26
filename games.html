@@ -1,139 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROBOCARD - Games</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROBOCARD - Games</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Instrument Sans', Arial, sans-serif;
-            line-height: 1.6;
-            color: #000;
-            background-color: #fff;
-        }
+    body {
+      font-family: 'Instrument Sans', Arial, sans-serif;
+      line-height: 1.6;
+      color: #000;
+      background-color: #fff;
+    }
 
-        /* Navigation Bar */
-        .navbar {
-            background-color: #1f1f1f;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* Navigation Bar */
+    .navbar {
+      background-color: #1f1f1f;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        /* LOGO */
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+    .logo { display: flex; align-items: center; gap: 1rem; }
+    .logo img { height: 80px; width: auto; display: block; }
+    .logo-text {
+      color: #E9E9E9;
+      font-family: 'Jaro', sans-serif;
+      font-size: 50px;
+      text-decoration: none;
+    }
 
-        .logo img {
-            height: 80px;
-            width: auto;
-            display: block;
-        }
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
 
-        .logo-text {
-            color: #E9E9E9;
-            font-family: 'Jaro', sans-serif;
-            font-size: 50px;
-            text-decoration: none;
-        }
+    .nav-menu a {
+      color: #E9E9E9;
+      font-size: 20px;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+    .nav-menu a:hover { opacity: 0.7; }
 
-        /* Navigation Menu */
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
+    .game-controller-img {
+      height: 40px;
+      width: 40px;
+      object-fit: contain;
+      display: block;
+      transition: opacity 0.3s;
+    }
+    .game-controller-img:hover { opacity: 0.7; }
 
-        /* menu links */
-        .nav-menu a {
-            color: #E9E9E9;
-            font-family: 'Instrument Sans';
-            font-size: 20px;
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
+    /* Main content area */
+    .content {
+      padding: 3rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-        /* hover effect */
-        .nav-menu a:hover {
-            opacity: 0.7;
-        }
+    .card {
+      border: 1px solid #d9d9d9;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 18px;
+      background: #fff;
+    }
 
-        /* Game Controller icon */
-        .game-controller-img {
-            height: 40px;
-            width: 40px;
-            object-fit: contain;
-            display: block;
-            transition: opacity 0.3s;
-        }
+    .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: end;
+    }
 
-        .game-controller-img:hover {
-            opacity: 0.7;
-        }
+    label { display:block; font-size: 13px; color:#555; margin-bottom: 6px; }
+    input {
+      width: min(650px, 92vw);
+      padding: 12px 12px;
+      border: 1px solid #cfcfcf;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+    }
+    input:focus { border-color:#7a7a7a; }
 
-        /* Main content area */
-        .content {
-            padding: 3rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+    button {
+      padding: 12px 14px;
+      border: 1px solid #1f1f1f;
+      border-radius: 10px;
+      background: #1f1f1f;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button.secondary {
+      background: #fff;
+      color:#1f1f1f;
+    }
 
-        /* Mobile responsive */
-        @media (max-width: 768px) {
-            .nav-menu {
-                gap: 1rem;
-            }
-            .logo img {
-                height: 60px;
-            }
-            .logo-text {
-                font-size: 40px;
-            }
-        }
-    </style>
+    .hint {
+      margin-top: 10px;
+      font-size: 13px;
+      color:#555;
+    }
+    .hint b { color:#111; }
+
+    .embed-wrap {
+      margin-top: 16px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #d9d9d9;
+      height: 75vh;
+      min-height: 520px;
+      background: #fafafa;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+    }
+
+    .pill {
+      display:inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      font-size: 12px;
+      margin-left: 8px;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .nav-menu { gap: 1rem; }
+      .logo img { height: 60px; }
+      .logo-text { font-size: 40px; }
+      .embed-wrap { height: 70vh; }
+    }
+  </style>
 </head>
 
 <body>
-    <!-- NAV BAR -->
-    <nav class="navbar">
-        <div class="logo">
-            <img src="./assets/logo.png" alt="ROBOCARD Logo">
-            <span class="logo-text">SPARK</span>
+  <!-- NAV BAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="./assets/logo.png" alt="ROBOCARD Logo">
+      <span class="logo-text">SPARK</span>
+    </div>
+
+    <ul class="nav-menu">
+      <li><a href="./index.html">Homepage</a></li>
+      <li><a href="./challenges.html">Challenges</a></li>
+      <li>
+        <a href="./games.html">
+          <img src="./assets/game-controller.png" alt="Games" class="game-controller-img">
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+    <h1>Games</h1>
+    <p>Embed your Arduino controller page here (without typing the IP each time).</p>
+
+    <div class="card">
+      <div class="row">
+        <div>
+          <label for="panelUrl">Arduino Panel URL (must be <b>HTTPS</b>)</label>
+          <input id="panelUrl" placeholder="Paste HTTPS tunnel URL, e.g. https://xxxx.trycloudflare.com" />
         </div>
 
-        <ul class="nav-menu">
-            <li><a href="./index.html">Homepage</a></li>
-            <li><a href="./challenges.html">Challenges</a></li>
-            <li>
-                <a href="./games.html">
-                    <img src="./assets/game-controller.png" alt="Games" class="game-controller-img">
-                </a>
-            </li>
-        </ul>
-    </nav>
+        <button id="loadBtn">Load Panel</button>
+        <button id="openBtn" class="secondary">Open in new tab</button>
+      </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="content">
-        <h1>Games</h1>
-        <p>Coming soon...</p>
+      <div class="hint" id="hint">
+        Tip: Your local IP like <b>http://192.168.137.50</b> will be blocked inside GitHub Pages because it’s HTTPS.
+        Use a tunnel URL (HTTPS) to embed it.
+        <span class="pill" id="pill">Not loaded</span>
+      </div>
+
+      <div class="embed-wrap">
+        <iframe id="panelFrame" src="about:blank"></iframe>
+      </div>
     </div>
+  </div>
+
+  <script>
+    const input = document.getElementById("panelUrl");
+    const frame = document.getElementById("panelFrame");
+    const hint  = document.getElementById("hint");
+    const pill  = document.getElementById("pill");
+
+    const KEY = "spark_panel_url";
+
+    function setPill(text) { pill.textContent = text; }
+
+    function normalize(url) {
+      url = (url || "").trim();
+      if (!url) return "";
+      // Remove trailing spaces and trailing slashes
+      url = url.replace(/\s+/g, "");
+      url = url.replace(/\/+$/, "");
+      return url;
+    }
+
+    function loadPanel() {
+      const url = normalize(input.value);
+
+      if (!url) {
+        setPill("Not loaded");
+        hint.innerHTML = `
+          <b>Paste your HTTPS tunnel URL.</b><br>
+          Example: https://xxxx.trycloudflare.com
+          <span class="pill" id="pill">Not loaded</span>
+        `;
+        return;
+      }
+
+      if (url.startsWith("http://")) {
+        setPill("Blocked (HTTP)");
+        hint.innerHTML = `
+          <b>That is HTTP, so browsers will block embedding on GitHub Pages.</b><br>
+          Use an <b>HTTPS tunnel URL</b> instead (trycloudflare / ngrok / etc).<br>
+          You can still open it in a new tab: <b>${url}</b>
+          <span class="pill" id="pill">Blocked (HTTP)</span>
+        `;
+        frame.src = "about:blank";
+        return;
+      }
+
+      localStorage.setItem(KEY, url);
+      frame.src = url + "/";   // load the Arduino page through the tunnel
+      setPill("Loaded ✅");
+      hint.innerHTML = `
+        Loaded panel from: <b>${url}</b><br>
+        If it shows a blank page, your tunnel isn’t pointing to the Arduino yet.
+        <span class="pill" id="pill">Loaded ✅</span>
+      `;
+    }
+
+    document.getElementById("loadBtn").addEventListener("click", loadPanel);
+    document.getElementById("openBtn").addEventListener("click", () => {
+      const url = normalize(input.value);
+      if (url) window.open(url, "_blank");
+    });
+
+    // Restore saved URL
+    const saved = localStorage.getItem(KEY) || "";
+    input.value = saved;
+    if (saved) loadPanel();
+  </script>
 </body>
 </html>
