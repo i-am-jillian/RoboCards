@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROBOCARD - Games</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Instrument Sans', Arial, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            background-color: #fff;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #1f1f1f;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* LOGO */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text {
+            color: #E9E9E9;
+            font-family: 'Jaro', sans-serif;
+            font-size: 50px;
+            text-decoration: none;
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        /* menu links */
+        .nav-menu a {
+            color: #E9E9E9;
+            font-family: 'Instrument Sans';
+            font-size: 20px;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        /* hover effect */
+        .nav-menu a:hover {
+            opacity: 0.7;
+        }
+
+        /* Game Controller icon */
+        .game-controller-img {
+            height: 40px;
+            width: 40px;
+            object-fit: contain;
+            display: block;
+            transition: opacity 0.3s;
+        }
+
+        .game-controller-img:hover {
+            opacity: 0.7;
+        }
+
+        /* Main content area */
+        .content {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 1rem;
+            }
+            .logo img {
+                height: 60px;
+            }
+            .logo-text {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAV BAR -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="./assets/logo.png" alt="ROBOCARD Logo">
+            <span class="logo-text">SPARK</span>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="./index.html">Homepage</a></li>
+            <li><a href="./challenges.html">Challenges</a></li>
+            <li>
+                <a href="./games.html">
+                    <img src="./assets/game-controller.png" alt="Games" class="game-controller-img">
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+        <h1>Games</h1>
+        <p>Coming soon...</p>
+    </div>
+</body>
+</html>
